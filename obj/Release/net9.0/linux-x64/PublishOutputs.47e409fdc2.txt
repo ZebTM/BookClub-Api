@@ -1,0 +1,9 @@
+/home/zacharybrown/Code/BookClubDotNet/bin/Release/net9.0/linux-x64/publish/BookClubDotNet
+/home/zacharybrown/Code/BookClubDotNet/bin/Release/net9.0/linux-x64/publish/appsettings.Development.json
+/home/zacharybrown/Code/BookClubDotNet/bin/Release/net9.0/linux-x64/publish/appsettings.json
+/home/zacharybrown/Code/BookClubDotNet/bin/Release/net9.0/linux-x64/publish/BookClubDotNet.dll
+/home/zacharybrown/Code/BookClubDotNet/bin/Release/net9.0/linux-x64/publish/BookClubDotNet.deps.json
+/home/zacharybrown/Code/BookClubDotNet/bin/Release/net9.0/linux-x64/publish/BookClubDotNet.runtimeconfig.json
+/home/zacharybrown/Code/BookClubDotNet/bin/Release/net9.0/linux-x64/publish/BookClubDotNet.pdb
+/home/zacharybrown/Code/BookClubDotNet/bin/Release/net9.0/linux-x64/publish/Microsoft.AspNetCore.OpenApi.dll
+/home/zacharybrown/Code/BookClubDotNet/bin/Release/net9.0/linux-x64/publish/Microsoft.OpenApi.dll

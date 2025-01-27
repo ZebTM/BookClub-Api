@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "9SfsWBaSONXYvyn1uXDPo/B5w21vPxmRH7cf3TkKVkQ=",
+  "Source": "BookClubDotNet",
+  "BasePath": "_content/BookClubDotNet",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
