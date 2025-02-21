@@ -5,27 +5,36 @@ namespace BookClub.Services;
 
 public class UserService : IUserService
 {
-    public IEnumerable<User> GetAllUsers()
+    private IUserRepository _userRepository;
+
+    public UserService(IUserRepository userRepository)
+    {
+        _userRepository = userRepository;
+    }
+
+
+
+    public async Task<IEnumerable<SanitizedUser>> GetAllUsers()
+    {
+        return await _userRepository.GetAllUsers();
+    }
+
+    public async Task<SanitizedUser?> GetUserById(Guid id)
     {
         throw new NotImplementedException();
     }
 
-    public User? GetUserById(Guid id)
+    public async Task<SanitizedUser> CreateUser(CreateUser user)
     {
         throw new NotImplementedException();
     }
 
-    public User InsertUser(User user)
+    public async Task<SanitizedUser?> EditUser(SanitizedUser user)
     {
         throw new NotImplementedException();
     }
 
-    public User? EditUser(User user)
-    {
-        throw new NotImplementedException();
-    }
-
-    public User? DeleteUser(User user)
+    public async Task<SanitizedUser?> DeleteUser(SanitizedUser user)
     {
         throw new NotImplementedException();
     }

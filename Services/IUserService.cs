@@ -4,9 +4,9 @@ namespace BookClub.Services;
 
 public interface IUserService
 {
-    IEnumerable<User> GetAllUsers();
-    User? GetUserById(Guid id);
-    User InsertUser(User user);
-    User? EditUser(User user);
-    User? DeleteUser(User user);
+    Task<IEnumerable<SanitizedUser>> GetAllUsers();
+    Task<SanitizedUser?> GetUserById(Guid id);
+    Task<SanitizedUser> CreateUser(CreateUser user);
+    Task<SanitizedUser?> EditUser(SanitizedUser user);
+    Task<SanitizedUser?> DeleteUser(SanitizedUser user);
 }

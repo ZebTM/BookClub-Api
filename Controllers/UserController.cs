@@ -1,28 +1,61 @@
 using Microsoft.AspNetCore.Mvc;
 using BookClub.Models;
-
+using BookClub.Services;
 namespace BookClub.Controllers;
 
 [ApiController]
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
+    private IUserService _userService;
     private readonly IEnumerable<User> _userList;
 
-    public UserController()
+
+    public UserController(IUserService userService)
     {
-        _userList = [
-            new User
-            {
-                Id = new Guid("9f1de15c-4cf9-4b3b-b55c-e93bc2dfd896"),
-                Username = "Test"
-            }
-        ];
+        _userService = userService;
     }
 
     [HttpGet]
-    public IActionResult GetUsers()
+    public async Task<IActionResult> GetUsers()
     {
-        return Ok(_userList);
+        return Ok(await _userService.GetAllUsers());
+    }
+
+    [HttpGet("id")]
+    public async Task<IActionResult> GetUserById(Guid id)
+    {
+        return Ok(await _userService.GetUserById(id));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateUser(CreateUser user)
+    {
+        return Ok(await _userService.CreateUser(user));
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> EditUser(SanitizedUser user)
+    {
+        SanitizedUser? editedUser = await _userService.EditUser(user);
+
+        if (editedUser == null)
+        {
+            return NotFound();
+        }
+        return Ok(user);
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteUser(SanitizedUser user)
+    {
+        var tmp = _userService.DeleteUser(user);
+        return Ok(tmp);
+    }
+
+    [HttpPut("id")]
+    public async Task<IActionResult> ResetUserPassword(string password)
+    {
+        throw new NotImplementedException();
     }
 }
