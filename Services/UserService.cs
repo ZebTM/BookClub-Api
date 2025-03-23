@@ -21,7 +21,16 @@ public class UserService : IUserService
 
     public async Task<SanitizedUser?> GetUserById(Guid id)
     {
-        throw new NotImplementedException();
+        User? user = await _userRepository.GetUser(id);
+
+        Console.WriteLine("User not found {0}", id);
+        if (user == null)
+        {
+            Console.WriteLine("User not found {0}", id);
+            return null;
+        }
+
+        return new SanitizedUser(user);
     }
 
     public async Task<SanitizedUser> CreateUser(CreateUser user)
