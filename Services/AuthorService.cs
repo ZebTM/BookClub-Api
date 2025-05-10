@@ -1,41 +1,76 @@
 using BookClub.Models;
-using BookClub.Repository;
+using BookClub.DatabaseContext;
+using Microsoft.EntityFrameworkCore;
+
+
 namespace BookClub.Services;
 
 public class AuthorService : IAuthorService
 {
-    private IAuthorRepository _authorRepository;
+    private MyDatabaseContext _dbContext;
 
-    public AuthorService(IAuthorRepository authorRepository)
+    public AuthorService(MyDatabaseContext dbContext)
     {
-        _authorRepository = authorRepository;
+        _dbContext = dbContext;
     }
 
 
-    public Task<IEnumerable<Author>> GetAllAuthors()
+    public async Task<IEnumerable<Author>> GetAllAuthors()
     {
-        throw new NotImplementedException();
+        return await _dbContext.Authors.ToListAsync();
     }
 
-    public Task<Author?> GetAuthorById(Guid id)
+    public async Task<Author?> GetAuthorById(Guid id)
     {
+        Author? foundAuthor = await _dbContext.Authors.FindAsync(id);
 
-        throw new NotImplementedException();
+        return foundAuthor;
     }
-    public Task<Author> CreateAuthor(Author author)
+    public async Task<Author> CreateAuthor(CreateAuthor author)
     {
+        Author convertedAuthor = new Author(author);
 
-        throw new NotImplementedException();
+        await _dbContext.Authors.AddAsync(convertedAuthor);
+
+        return convertedAuthor;
     }
-    public Task<Author?> EditAuthor(Author author)
-    {
 
-        throw new NotImplementedException();
+    public async Task<Author?> EditAuthor(Author author)
+    {
+        Author? foundAuthor = await _dbContext.Authors.FindAsync(author.Id);
+
+        if (foundAuthor == null)
+        {
+            return foundAuthor;
+        }
+
+        foundAuthor.Name = author.Name;
+
+        await _dbContext.SaveChangesAsync();
+
+        return foundAuthor;
     }
-    public Task<Author?> DeleteAuthor(Guid id)
-    {
 
-        throw new NotImplementedException();
+
+    public async Task<Author?> DeleteAuthor(Guid id)
+    {
+        try
+        {
+            Author? foundAuthor = await _dbContext.Authors.FindAsync(id);
+
+            if (foundAuthor is not null)
+            {
+                await _dbContext.Authors
+                    .Where(a => a.Id == id)
+                    .ExecuteDeleteAsync();
+            }
+
+            return foundAuthor;
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
     }
 
 }
