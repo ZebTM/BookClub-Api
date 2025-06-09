@@ -1,7 +1,9 @@
 using BookClub.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using BookClub.Services;
 using BookClub.Repository;
+using BookClub.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +18,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
-
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher>();
 
 
 

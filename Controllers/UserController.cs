@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using BookClub.Models;
 using BookClub.Services;
+
 namespace BookClub.Controllers;
 
 [ApiController]
@@ -8,10 +10,12 @@ namespace BookClub.Controllers;
 public class UserController : ControllerBase
 {
     private IUserService _userService;
+    private IPasswordHasher<User> _passwordHasher;
 
-    public UserController(IUserService userService)
+    public UserController(IUserService userService, IPasswordHasher<User> passwordHasher)
     {
         _userService = userService;
+        _passwordHasher = passwordHasher;
     }
 
     [HttpGet]
@@ -34,9 +38,23 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateUser(CreateUser user)
+    public async Task<IActionResult> CreateUser(CreateUser userInfo)
     {
-        return Ok(await _userService.CreateUser(user));
+
+        if (!InputValidator.ValidatePassword(userInfo.Password))
+        {
+            return BadRequest("Bad Password");
+        }
+
+        if (!InputValidator.ValidateUsername(userInfo.Username))
+        {
+            return BadRequest("Bad Email");
+        }
+
+        User newUser = new User(userInfo);
+        newUser.HashedPassword = _passwordHasher.HashPassword(newUser, newUser.HashedPassword);
+
+        return Ok(await _userService.CreateUser(newUser));
     }
 
     [HttpPut]
@@ -58,9 +76,34 @@ public class UserController : ControllerBase
         return Ok(deletedUser);
     }
 
-    [HttpPut("id")]
-    public async Task<IActionResult> ResetUserPassword(string password)
+    [HttpPost("{username}")]
+    public async Task<IActionResult> LoginUser(String username, String givenPassword)
     {
-        throw new NotImplementedException();
+        User? user = await _userService.GetUserByUsername(username);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+
+        PasswordVerificationResult result = _passwordHasher
+        .VerifyHashedPassword(user, user.HashedPassword, givenPassword);
+
+        switch (result)
+        {
+            case PasswordVerificationResult.Success:
+
+                return Ok();
+
+            case PasswordVerificationResult.Failed:
+                return Unauthorized();
+
+            case PasswordVerificationResult.SuccessRehashNeeded:
+                return Ok();
+        }
+
+        return Unauthorized();
+
     }
 }

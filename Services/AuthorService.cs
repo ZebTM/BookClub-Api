@@ -31,6 +31,7 @@ public class AuthorService : IAuthorService
         Author convertedAuthor = new Author(author);
 
         await _dbContext.Authors.AddAsync(convertedAuthor);
+        await _dbContext.SaveChangesAsync();
 
         return convertedAuthor;
     }

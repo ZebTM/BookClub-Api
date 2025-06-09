@@ -81,6 +81,11 @@ public class UserRepository : IUserRepository, IDisposable
         return foundUser;
     }
 
+    public async Task<User?> GetUserByUsername(String Username)
+    {
+        return await _dbContext.Users.Where(u => u.Username == Username).FirstOrDefaultAsync();
+    }
+
     public void Dispose()
     {
 

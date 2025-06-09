@@ -8,4 +8,5 @@ public interface IUserRepository : IDisposable
     Task<User?> DeleteUser(Guid id);
     Task<User?> GetUser(Guid id);
     Task<User?> EditUser(SanitizedUser user);
+    Task<User?> GetUserByUsername(String username);
 }

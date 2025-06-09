@@ -10,6 +10,11 @@ public class User
     [Column("username")]
     public String Username { get; set; } = String.Empty;
 
+    [Column("hashed_password")]
+    public String HashedPassword { get; set; } = String.Empty;
+
+    [Column("email")]
+    public String Email { get; set; } = String.Empty;
 
     public User() { }
 
@@ -18,6 +23,8 @@ public class User
     {
         Id = Guid.NewGuid();
         Username = userInfo.Username;
+        HashedPassword = userInfo.Password;
+        Email = userInfo.Email;
     }
 }
 
@@ -27,10 +34,13 @@ public class SanitizedUser
     public Guid Id { get; set; } = Guid.NewGuid();
     public String Username { get; set; } = String.Empty;
     public Boolean Sanitized { get; set; } = true;
+    public String Email { get; set; } = String.Empty;
+
     public SanitizedUser(User user)
     {
         Id = user.Id;
         Username = user.Username;
+        Email = user.Email;
     }
 
     public SanitizedUser() { }
@@ -39,4 +49,6 @@ public class SanitizedUser
 public class CreateUser
 {
     public String Username { get; set; } = String.Empty;
+    public String Email { get; set; } = String.Empty;
+    public String Password { get; set; } = String.Empty;
 }

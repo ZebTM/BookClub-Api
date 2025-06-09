@@ -33,9 +33,8 @@ public class UserService : IUserService
         return new SanitizedUser(user);
     }
 
-    public async Task<SanitizedUser> CreateUser(CreateUser userInfo)
+    public async Task<SanitizedUser> CreateUser(User CreatedUser)
     {
-        User CreatedUser = new User(userInfo);
 
         CreatedUser = await _userRepository.InsertUser(CreatedUser);
 
@@ -67,5 +66,10 @@ public class UserService : IUserService
 
         return new SanitizedUser(userToBeDeleted);
 
+    }
+
+    public async Task<User?> GetUserByUsername(String username)
+    {
+        return await _userRepository.GetUserByUsername(username);
     }
 }
