@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using BookClub.Models;
 using BookClub.Services;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace BookClub.Controllers;
 
@@ -74,36 +75,5 @@ public class UserController : ControllerBase
     {
         SanitizedUser? deletedUser = await _userService.DeleteUser(id);
         return Ok(deletedUser);
-    }
-
-    [HttpPost("{username}")]
-    public async Task<IActionResult> LoginUser(String username, String givenPassword)
-    {
-        User? user = await _userService.GetUserByUsername(username);
-
-        if (user == null)
-        {
-            return NotFound();
-        }
-
-
-        PasswordVerificationResult result = _passwordHasher
-        .VerifyHashedPassword(user, user.HashedPassword, givenPassword);
-
-        switch (result)
-        {
-            case PasswordVerificationResult.Success:
-
-                return Ok();
-
-            case PasswordVerificationResult.Failed:
-                return Unauthorized();
-
-            case PasswordVerificationResult.SuccessRehashNeeded:
-                return Ok();
-        }
-
-        return Unauthorized();
-
     }
 }

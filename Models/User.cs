@@ -52,3 +52,9 @@ public class CreateUser
     public String Email { get; set; } = String.Empty;
     public String Password { get; set; } = String.Empty;
 }
+
+public class UserCredentials
+{
+    public String Username { get; set; } = String.Empty;
+    public String Password { get; set; } = String.Empty;
+}

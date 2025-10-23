@@ -15,6 +15,8 @@ public static class InputValidator
         return Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$");
     }
 
+    // Passwords must be between 3 and 25 characters
+    // Can contain letters, numbers and special characters @$!%*?&
     public static bool ValidateUsername(string Username)
     {
         return Regex.IsMatch(Username, @"^[A-Za-z\d@$!%*?&]{3,25}$");
