@@ -32,7 +32,10 @@ public class TokenService : ITokenService
         var claims = new[] {
             new Claim(JwtRegisteredClaimNames.Sub, subject),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+            new Claim(JwtRegisteredClaimNames.Iat,
+
+            new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString(),
+    ClaimValueTypes.Integer64),
             new Claim("UserId", user.Id.ToString()),
             new Claim("Username", user.Username),
             new Claim("Email", user.Email)

@@ -29,7 +29,7 @@ public class AuthenticatorController : ControllerBase
 
         if (user == null)
         {
-            return NotFound();
+            return Unauthorized();
         }
 
 

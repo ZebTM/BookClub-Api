@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using BookClub.Models;
 using BookClub.Services;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookClub.Controllers;
 
@@ -58,6 +59,7 @@ public class UserController : ControllerBase
         return Ok(await _userService.CreateUser(newUser));
     }
 
+    [Authorize]
     [HttpPut]
     public async Task<IActionResult> EditUser(SanitizedUser user)
     {
@@ -67,9 +69,11 @@ public class UserController : ControllerBase
         {
             return NotFound();
         }
+
         return Ok(user);
     }
 
+    [Authorize]
     [HttpDelete]
     public async Task<IActionResult> DeleteUser(Guid id)
     {
