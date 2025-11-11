@@ -19,7 +19,7 @@ public class TokenService : ITokenService
     public string GenerateToken(User user)
     {
         string? audience = _configuration["Jwt:Audience"];
-        string? subject = _configuration["Jwt:Subject"];
+        string? subject = user.Id.ToString();
         string? keyValue = _configuration["Jwt:Key"];
         string? issuer = _configuration["Jwt:Issuer"];
         int expireTime = Convert.ToInt16(_configuration["Jwt:ExpireMinutes"] ?? "60");

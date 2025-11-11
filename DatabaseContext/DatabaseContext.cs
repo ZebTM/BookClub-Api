@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using BookClub.Models;
 
 namespace BookClub.DatabaseContext;
@@ -10,11 +11,15 @@ public class MyDatabaseContext : DbContext
 
     public MyDatabaseContext(IConfiguration configuration, DbContextOptions<MyDatabaseContext> options) : base(options)
     {
+        // NpgsqlConnection.GlobalTypeMapper.MapEnum<Role>("account_role");
         _configuration = configuration;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // modelBuilder.HasPostgresEnum<Role>("account_role");
+        modelBuilder.HasPostgresEnum<Role>("role_type");
+
         base.OnModelCreating(modelBuilder);
     }
 

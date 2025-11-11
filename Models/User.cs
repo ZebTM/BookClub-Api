@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace BookClub.Models;
 
@@ -15,6 +16,9 @@ public class User
 
     [Column("email")]
     public String Email { get; set; } = String.Empty;
+
+    [Column("account_role")]
+    public Role Role { get; set; } = Role.user;
 
     public User() { }
 
@@ -35,12 +39,14 @@ public class SanitizedUser
     public String Username { get; set; } = String.Empty;
     public Boolean Sanitized { get; set; } = true;
     public String Email { get; set; } = String.Empty;
+    public Role Role { get; set; } = Role.user;
 
     public SanitizedUser(User user)
     {
         Id = user.Id;
         Username = user.Username;
         Email = user.Email;
+        Role = user.Role;
     }
 
     public SanitizedUser() { }
@@ -51,6 +57,7 @@ public class CreateUser
     public String Username { get; set; } = String.Empty;
     public String Email { get; set; } = String.Empty;
     public String Password { get; set; } = String.Empty;
+    public Role Role { get; set; } = Role.user;
 }
 
 public class UserCredentials

@@ -50,9 +50,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-
 builder.Services.AddDbContext<MyDatabaseContext>(opt =>
-        opt.UseNpgsql(builder.Configuration.GetConnectionString("MyConnectionString")));
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("MyConnectionString"),
+    o => o.MapEnum<Role>("role_type")
+));
 
 var app = builder.Build();
 
